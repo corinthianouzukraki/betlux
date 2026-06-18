@@ -616,13 +616,7 @@
   </div>
 </footer>
 
-<script>
-  function enterSite() {
-    document.getElementById('age-gate').style.opacity = '0';
-    document.getElementById('age-gate').style.transition = 'opacity 0.5s';
-    setTimeout(() => document.getElementById('age-gate').style.display = 'none', 500);
-  }
-</script>
+
 <!-- AUTH MODAL -->
 <div id="auth-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
   <div style="background:#13131E;border:1px solid rgba(255,215,0,0.25);border-radius:24px;width:90%;max-width:420px;padding:40px 36px;position:relative;box-shadow:0 0 80px rgba(124,58,237,0.2);">
@@ -695,9 +689,13 @@
 
 <script>
   function enterSite() {
-    document.getElementById('age-gate').style.opacity = '0';
-    document.getElementById('age-gate').style.transition = 'opacity 0.5s';
-    setTimeout(() => document.getElementById('age-gate').style.display = 'none', 500);
+    const gate = document.getElementById('age-gate');
+    gate.style.transition = 'opacity 0.5s';
+    gate.style.opacity = '0';
+    setTimeout(() => {
+      gate.style.display = 'none';
+      openModal('login');
+    }, 500);
   }
   function openModal(tab) {
     const m = document.getElementById('auth-modal');
