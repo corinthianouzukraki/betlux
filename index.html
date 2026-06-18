@@ -359,8 +359,8 @@
     <li><a href="#jogo-responsavel">Jogo Responsável</a></li>
   </ul>
   <div class="nav-actions">
-    <button class="btn-outline" onclick="window.open('https://accounts.google.com/signin','_blank')">Entrar</button>
-    <button class="btn-primary" onclick="window.open('https://accounts.google.com/signin','_blank')">Cadastrar</button>
+    <button class="btn-outline" onclick="openModal('login')">Entrar</button>
+    <button class="btn-primary" onclick="openModal('register')">Cadastrar</button>
   </div>
 </nav>
 
@@ -622,6 +622,108 @@
     document.getElementById('age-gate').style.transition = 'opacity 0.5s';
     setTimeout(() => document.getElementById('age-gate').style.display = 'none', 500);
   }
+</script>
+<!-- AUTH MODAL -->
+<div id="auth-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div style="background:#13131E;border:1px solid rgba(255,215,0,0.25);border-radius:24px;width:90%;max-width:420px;padding:40px 36px;position:relative;box-shadow:0 0 80px rgba(124,58,237,0.2);">
+    
+    <!-- Close -->
+    <button onclick="closeModal()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:#888;font-size:22px;cursor:pointer;">✕</button>
+
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-size:28px;font-weight:900;background:linear-gradient(135deg,#FFD700,#FFE55C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Bet<span style="-webkit-text-fill-color:#A855F7;">Lux</span></div>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;background:#0A0A0F;border-radius:12px;padding:4px;margin-bottom:28px;">
+      <button id="tab-login" onclick="switchTab('login')" style="flex:1;padding:10px;border:none;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;">Entrar</button>
+      <button id="tab-register" onclick="switchTab('register')" style="flex:1;padding:10px;border:none;border-radius:9px;font-weight:700;font-size:14px;cursor:pointer;background:transparent;color:#888;">Cadastrar</button>
+    </div>
+
+    <!-- Google Button -->
+    <button onclick="window.open('https://accounts.google.com/signin','_blank')" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#333;font-weight:700;font-size:15px;border:none;border-radius:12px;padding:14px;cursor:pointer;margin-bottom:20px;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(255,255,255,0.2)'" onmouseout="this.style.boxShadow='none'">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continuar com Google
+    </button>
+
+    <!-- Divider -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+      <span style="font-size:12px;color:#666;">ou</span>
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+    </div>
+
+    <!-- Form -->
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div id="name-field" style="display:none;">
+        <label style="font-size:12px;color:#888;font-weight:600;display:block;margin-bottom:6px;">NOME COMPLETO</label>
+        <input type="text" placeholder="Seu nome" style="width:100%;background:#0A0A0F;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:13px 16px;color:#E8E8F0;font-size:15px;outline:none;" onfocus="this.style.borderColor='#FFD700'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      </div>
+      <div>
+        <label style="font-size:12px;color:#888;font-weight:600;display:block;margin-bottom:6px;">E-MAIL</label>
+        <input type="email" placeholder="seu@email.com" style="width:100%;background:#0A0A0F;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:13px 16px;color:#E8E8F0;font-size:15px;outline:none;" onfocus="this.style.borderColor='#FFD700'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      </div>
+      <div>
+        <label style="font-size:12px;color:#888;font-weight:600;display:block;margin-bottom:6px;">SENHA</label>
+        <input type="password" placeholder="••••••••" style="width:100%;background:#0A0A0F;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:13px 16px;color:#E8E8F0;font-size:15px;outline:none;" onfocus="this.style.borderColor='#FFD700'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      </div>
+      <div id="confirm-field" style="display:none;">
+        <label style="font-size:12px;color:#888;font-weight:600;display:block;margin-bottom:6px;">CONFIRMAR SENHA</label>
+        <input type="password" placeholder="••••••••" style="width:100%;background:#0A0A0F;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:13px 16px;color:#E8E8F0;font-size:15px;outline:none;" onfocus="this.style.borderColor='#FFD700'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+      </div>
+
+      <div id="forgot-link" style="text-align:right;margin-top:-6px;">
+        <a href="#" style="font-size:13px;color:#FFD700;text-decoration:none;">Esqueci minha senha</a>
+      </div>
+
+      <button id="submit-btn" style="width:100%;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;font-weight:800;font-size:16px;border:none;border-radius:12px;padding:15px;cursor:pointer;margin-top:4px;">Entrar</button>
+
+      <p id="switch-text" style="text-align:center;font-size:13px;color:#666;margin-top:4px;">
+        Não tem conta? <a href="#" onclick="switchTab('register');return false;" style="color:#FFD700;font-weight:700;text-decoration:none;">Cadastre-se grátis</a>
+      </p>
+    </div>
+
+    <!-- Segurança -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:20px;">
+      <span style="font-size:11px;color:#444;">🔒 Conexão segura SSL</span>
+      <span style="font-size:11px;color:#444;">·</span>
+      <span style="font-size:11px;color:#444;">🔞 +18 apenas</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function enterSite() {
+    document.getElementById('age-gate').style.opacity = '0';
+    document.getElementById('age-gate').style.transition = 'opacity 0.5s';
+    setTimeout(() => document.getElementById('age-gate').style.display = 'none', 500);
+  }
+  function openModal(tab) {
+    const m = document.getElementById('auth-modal');
+    m.style.display = 'flex';
+    switchTab(tab);
+  }
+  function closeModal() {
+    document.getElementById('auth-modal').style.display = 'none';
+  }
+  function switchTab(tab) {
+    const isLogin = tab === 'login';
+    document.getElementById('tab-login').style.background = isLogin ? 'linear-gradient(135deg,#FFD700,#FFA500)' : 'transparent';
+    document.getElementById('tab-login').style.color = isLogin ? '#000' : '#888';
+    document.getElementById('tab-register').style.background = !isLogin ? 'linear-gradient(135deg,#FFD700,#FFA500)' : 'transparent';
+    document.getElementById('tab-register').style.color = !isLogin ? '#000' : '#888';
+    document.getElementById('name-field').style.display = isLogin ? 'none' : 'block';
+    document.getElementById('confirm-field').style.display = isLogin ? 'none' : 'block';
+    document.getElementById('forgot-link').style.display = isLogin ? 'block' : 'none';
+    document.getElementById('submit-btn').textContent = isLogin ? 'Entrar' : 'Criar Conta';
+    document.getElementById('switch-text').innerHTML = isLogin
+      ? 'Não tem conta? <a href="#" onclick="switchTab(\'register\');return false;" style="color:#FFD700;font-weight:700;text-decoration:none;">Cadastre-se grátis</a>'
+      : 'Já tem conta? <a href="#" onclick="switchTab(\'login\');return false;" style="color:#FFD700;font-weight:700;text-decoration:none;">Entrar</a>';
+  }
+  document.getElementById('auth-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
 </script>
 </body>
 </html>
